@@ -1,0 +1,5 @@
+daily-ops-review/references/local-config.md
+*.local.md
+.env
+.DS_Store
+node_modules/
