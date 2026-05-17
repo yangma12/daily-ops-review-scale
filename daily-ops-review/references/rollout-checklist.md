@@ -36,6 +36,8 @@ Run these scenarios before relying on the system:
 7. Fixed evening trigger after manual review does not duplicate prompts.
 8. `汇报：最近三天` reads Base records and returns a concise summary.
 9. A task marked `是否滚动到明天` with `下一步动作` appears in the next morning `早计划` prompt.
+10. If the user sends `早计划` with new tasks but omits yesterday's unfinished carry-over, the reply merges both sources into one draft and asks for confirmation.
+11. If no manual morning plan is completed before the fixed 09:00 trigger, the robot proactively sends the morning planning prompt.
 
 ## Phase 5: First Week Calibration
 

@@ -39,7 +39,7 @@
 汇报：本月目标进展
 ```
 
-早计划会优先读取昨天复盘里标记为「滚动到明天」的任务，并要求你确认、修改或补充今天的安排。晚复盘会把当天计划拆成完成、部分完成、未完成和取消，并提取下一步动作。
+早计划会优先读取昨天复盘里标记为「滚动到明天」的任务。即使你手动触发 `早计划` 时只写了今天新增事项，机器人也应该把昨晚未完成事项和今天新增事项合并成一版草案，再让你确认、修改或删减。晚复盘会把当天计划拆成完成、部分完成、未完成和取消，并提取下一步动作。
 
 ### 数据会沉淀到哪里
 
@@ -150,7 +150,7 @@ cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 22 * * *" --prompt "晚
 cc-connect daemon restart
 ```
 
-之后你也可以随时给机器人发送 `早计划` 或 `晚复盘` 手动触发。
+之后你也可以随时给机器人发送 `早计划` 或 `晚复盘` 手动触发。如果你在 09:00 前已经手动完成早计划，09:00 的固定触发不应重复追问；如果你没有提前完成，09:00 固定触发会主动发起早计划提示，让你填写今天安排。
 
 ### 验证安装
 
@@ -222,7 +222,7 @@ Manual triggers:
 汇报：本月目标进展
 ```
 
-The morning plan first loads tasks marked as carried over from the previous review. The evening review classifies each planned item as completed, partially completed, unfinished, or cancelled, then extracts next actions.
+The morning plan first loads tasks marked as carried over from the previous review. Even if the user manually sends `早计划` with only new tasks, the robot should merge yesterday's unfinished carry-over with today's new tasks into one draft and ask for confirmation. The evening review classifies each planned item as completed, partially completed, unfinished, or cancelled, then extracts next actions.
 
 ### Data Storage
 
@@ -331,7 +331,7 @@ cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 22 * * *" --prompt "晚
 cc-connect daemon restart
 ```
 
-You can also send `早计划` or `晚复盘` to the robot manually at any time.
+You can also send `早计划` or `晚复盘` to the robot manually at any time. If the morning plan is already completed manually before 09:00, the fixed 09:00 trigger should not ask again. If it is not completed, the 09:00 trigger proactively asks the user to fill today's plan.
 
 ### Verify
 

@@ -6,9 +6,18 @@ Trigger: fixed morning schedule or `早计划`.
 
 Goal: create a realistic daily plan with low friction.
 
+### Entry Modes
+
+Morning planning has two valid entry modes:
+
+1. Empty trigger: fixed 09:00 schedule or a bare `早计划` message. Start by prompting the user.
+2. Trigger with user plan: `早计划 ...` or the user's direct reply to the morning prompt. Parse the supplied plan, but still fetch carry-over tasks first.
+
+Never skip carry-over retrieval just because the user already supplied today's new plan.
+
 ### Carry-over First
 
-Before asking for today's new plan, read yesterday's and recent unfinished task records for the same user:
+Before asking for or finalizing today's new plan, read yesterday's and recent unfinished task records for the same user:
 
 - `是否滚动到明天 = true`
 - or `状态` is `未完成`, `部分完成`, or `滚动`
@@ -40,6 +49,15 @@ If carry-over tasks exist, the morning prompt should lead with them:
 
 If no carry-over tasks exist, use the normal morning prompt.
 
+### Scheduled Morning Behavior
+
+For the fixed 09:00 trigger:
+
+- First check whether today's `每日计划.早计划状态` is already `已完成`.
+- If already completed by a manual `早计划`, do not ask the user to fill the morning plan again. A short "今天早计划已记录" confirmation is enough, and silence is also acceptable if the integration supports it.
+- If not completed, send the morning prompt. Include carry-over tasks at the top when they exist.
+- The scheduled trigger asks the user to fill today's plan; it should not create a finished daily plan from an empty trigger alone.
+
 ### Prompt
 
 Use a short prompt:
@@ -67,11 +85,37 @@ Extract:
 - For each carry-over task: keep, modify, split, drop, or postpone
 - Today's concrete part for each kept carry-over task
 
+When the user provides today's plan but omits carry-over tasks, do not assume those carry-over tasks are cancelled. Treat them as pending confirmation and include them in the merged draft.
+
 If no Top 1-3 can be identified, ask:
 
 ```text
 今天最重要的 1-3 件事是什么？先不用排很细。
 ```
+
+### Merge and Confirm
+
+Before writing the final morning plan, merge two sources:
+
+1. Carry-over tasks from yesterday or recent unfinished records.
+2. New tasks from the user's morning input.
+
+If carry-over tasks exist and the user did not explicitly keep, change, postpone, or drop each one, reply with a merged draft and ask for confirmation instead of silently marking the morning plan complete:
+
+```text
+我把昨晚延续事项和你今天新增的计划合并成这个草案，你确认一下：
+
+昨晚延续：
+1. ... -> 今天建议先做 ...
+
+今天新增：
+1. ...
+2. ...
+
+你回复「确认」即可；也可以直接说删掉/推迟/改成哪一 part。
+```
+
+After the user confirms or edits the draft, write the final plan and mark `早计划状态 = 已完成`.
 
 ### Write
 
@@ -84,7 +128,7 @@ If no Top 1-3 can be identified, ask:
   - today's specific part in `下一步动作`
   - linked goal copied when available
 - For carry-over tasks the user drops or postpones, update the previous task's `是否滚动到明天` accordingly and record the decision.
-- Mark `早计划状态 = 已完成`.
+- Mark `早计划状态 = 已完成` only after the user confirms or clearly accepts the merged plan.
 - Keep raw user wording in `原始消息`.
 
 ### Reply
@@ -103,7 +147,7 @@ Return a concise plan confirmation:
 When carry-over tasks were included, explicitly show which were kept or changed:
 
 ```text
-已把昨天延续事项处理成今天计划：
+已确认，今天计划里已包含昨天延续事项：
 1. ... -> 今天做到 ...
 2. ... -> 今天先不做
 
