@@ -2,59 +2,182 @@
 
 **语言 / Language:** **中文** | [English](#english-version)
 
-`daily-ops-review` 是一个面向个人日程管理、每日计划、晚间复盘、进度沉淀和周期汇报的 Codex Skill。它通过飞书多维表格沉淀结构化数据，并通过 cc-connect 让飞书机器人触发早计划、晚复盘、日间记录和阶段汇报。
+`daily-ops-review` 是一个面向个人日程管理、每日计划、事件记录、情绪沉淀、晚间复盘和周期汇报的 Codex Skill。它通过飞书多维表格保存结构化记忆，并通过 cc-connect 让飞书机器人在每天合适的时间自然接住你的计划和复盘。
 
 这个仓库的目标是：把一套可复用的「每日复盘 Skill」做成别人可以交给 AI 自动安装、配置和使用的开源项目。
 
 ## 中文版本
 
-### 它解决什么问题
+### 它真正想解决什么
 
-很多每日复盘工具的问题是：记录太散、计划和复盘断开、长期回顾时很难重新检索。这个 Skill 的设计重点是把每天的信息沉淀成可查询的数据，而不是只留在聊天上下文里。
+这不是一个普通待办清单。它更像一个通过机器人陪跑的「日程记忆系统」：
 
-它支持这些核心场景：
+- 昨晚没有做完的事，不会在第二天消失。
+- 早上新写的计划，会和昨天遗留任务合并成今天的计划草案。
+- 白天发生的事件、打断、机会、反馈、情绪和想法，可以随手记录。
+- 晚上复盘时，它会把计划、执行、偏差、感受和明日动作沉淀下来。
+- 过几天、几周或一个月后，你可以让它按时间、目标、任务状态、情绪和阻塞模式做汇报。
 
-- 早上规划当天要做什么。
-- 晚上复盘计划完成情况、阻塞、情绪和明日动作。
-- 白天随时记录事件、完成进展和计划调整。
-- 自动把未完成且需要继续推进的事项滚动到第二天早计划。
-- 从飞书多维表格里按日期、状态、目标、周期做阶段汇报。
+所以它沉淀的不只是“做没做完”，也包括：为什么没做完、发生了什么、当时的感受、反复出现的模式，以及下一步应该怎么调整。
 
-### 工作流
+### 每天的自然闭环
 
-固定触发：
+1. **前一晚复盘**
+   你告诉机器人哪些完成了、哪些没完成、为什么没完成、明天继续做哪一 part。机器人把需要继续的任务标记为 `是否滚动到明天`，并写入具体 `下一步动作`。
+
+2. **第二天早计划**
+   机器人先读取昨晚滚动过来的任务，再合并你今天新增的计划。如果你只写了今天新计划、没有提昨天没做完的事，它也不能默认丢掉昨天遗留项，而是要合并成一版草案让你确认。
+
+3. **白天随手记录**
+   你可以记录事件、进展、打断、客户反馈、想法、情绪和能量变化。这些会进入 `事件日志`，成为晚上复盘和月度总结的素材。
+
+4. **晚上复盘**
+   机器人拉取今天早计划和任务执行情况，帮你按完成、部分完成、未完成、取消来复盘，并提取偏差原因、行为模式和明天建议。
+
+5. **周期汇报**
+   当你问 `汇报：最近三天`、`汇报：本月目标进展`、`汇报：最近我主要焦虑在哪里` 时，它会从飞书多维表格里检索结构化记录，而不是只依赖聊天上下文。
+
+### 固定触发
 
 - 每天 07:30：`早计划`
 - 每天 23:30：`晚复盘`
 
-手动触发：
+如果你在 07:30 前已经手动完成早计划，07:30 的固定触发不应重复追问；如果你没有提前完成，机器人会主动发起早计划提示。
+
+### 手动触发关键词
 
 ```text
 早计划
 晚复盘
-记录：今天客户反馈方案方向需要调整
-完成：客户方案完成 70%，明天继续补定价页
-调整：招聘 JD 挪到明天，先改岗位亮点
-汇报：最近三天
-汇报：本月目标进展
+记录：...
+完成：...
+调整：...
+汇报：...
 ```
 
-早计划会优先读取昨天复盘里标记为「滚动到明天」的任务。即使你手动触发 `早计划` 时只写了今天新增事项，机器人也应该把昨晚未完成事项和今天新增事项合并成一版草案，再让你确认、修改或删减。晚复盘会把当天计划拆成完成、部分完成、未完成和取消，并提取下一步动作。
+触发词需要放在消息开头，避免机器人从普通聊天里误判。
 
-### 数据会沉淀到哪里
+### 使用示例：第二天自动承接昨晚没做完的事
+
+前一晚你复盘：
+
+```text
+晚复盘
+客户方案只完成了 70%，定价页还没写。明天继续，先补定价页和报价逻辑。
+招聘 JD 没做，今天被临时会议打断了，明天只改岗位亮点。
+```
+
+第二天早上你只发了新增计划：
+
+```text
+早计划 今天主要做产品周报和一个客户电话。
+```
+
+机器人应该先读取昨晚滚动事项，然后回复类似：
+
+```text
+我把昨晚延续事项和你今天新增的计划合并成这个草案，你确认一下：
+
+昨晚延续：
+1. 客户方案 -> 今天先补定价页和报价逻辑
+2. 招聘 JD -> 今天只改岗位亮点
+
+今天新增：
+1. 产品周报
+2. 客户电话
+
+你回复「确认」即可；也可以直接说删掉、推迟或改成哪一 part。
+```
+
+### 使用示例：白天记录事件、感受和反思
+
+你可以随时给机器人发：
+
+```text
+记录：上午客户会后有点焦虑，主要担心方案范围太大，下午需要先收敛到报价和交付边界。
+```
+
+```text
+记录：下午被一个临时需求打断，原本写方案的时间被占用，感觉节奏有点乱。
+```
+
+```text
+记录：今天发现自己在不确定报价时会拖延，可能需要先列一个最小报价模板。
+```
+
+这些内容会沉淀为 `事件日志`。其中事件类型、影响程度、情绪、关联任务、标签和原始消息都会尽量保留下来，后面可以用于复盘：
+
+```text
+汇报：最近我主要被什么事情打断？
+汇报：最近我主要焦虑在哪里？
+汇报：最近三天哪些任务反复滚动？
+```
+
+### 使用示例：进展、调整和完成
+
+```text
+完成：客户方案完成 70%，明天继续补竞品分析和定价页。
+```
+
+```text
+调整：招聘 JD 今天不做，明天只改岗位亮点。
+```
+
+```text
+完成：产品周报写完初版，晚上复盘时提醒我看一下是不是太散。
+```
+
+这些消息会更新 `任务执行`，必要时标记 `是否滚动到明天`，并保存下一步动作。
+
+### 使用示例：晚复盘
+
+```text
+晚复盘
+客户方案部分完成，定价页写完了，但竞品分析没做，因为下午被临时需求打断。
+产品周报完成了，不过写得有点散。
+今天整体有点焦虑，主要是任务切换太多。
+明天客户方案继续补竞品分析，产品周报只做结构调整。
+```
+
+机器人应该沉淀：
+
+- 哪些任务完成、部分完成、未完成或取消。
+- 偏差原因，例如外部打断、时间估计错误、目标不清、精力不足。
+- 关键事件和情绪信号。
+- 明天要继续的任务和具体下一步。
+- 一条 `复盘报告`，供后续周报、月报和目标汇报使用。
+
+### 会沉淀到哪里
 
 安装脚本会创建或配置一个飞书多维表格，包含 6 张表：
 
-- `目标库`
-- `周期计划`
-- `每日计划`
-- `任务执行`
-- `事件日志`
-- `复盘报告`
+| 表 | 用途 |
+| --- | --- |
+| `目标库` | 长期、月度、项目、习惯等目标。 |
+| `周期计划` | 周计划、月计划、阶段计划和阶段复盘。 |
+| `每日计划` | 每天的 Top 1-3、约束、能量、早计划状态、晚复盘状态。 |
+| `任务执行` | 每个具体任务的状态、完成度、未完成原因、下一步动作、是否滚动。 |
+| `事件日志` | 白天发生的事件、反馈、打断、情绪、想法、决策和机会。 |
+| `复盘报告` | 每日、每周、每月、目标维度的复盘摘要和建议。 |
 
-这些表会保留原始表达，也会生成适合筛选和汇总的结构化字段，例如日期、用户、状态、优先级、所属目标、是否滚动到明天、下一步动作等。
+所有关键记录都会保留 `原始消息`，同时写入结构化字段，方便之后按日期、状态、目标、事件类型、情绪和影响程度检索。
 
-长期数据量变大后，汇报不应该全量遍历所有记录。Skill 会要求 AI 优先使用飞书多维表格的筛选、视图和字段投影能力，按日期范围、状态、用户、目标等条件检索，再做阶段总结。
+### 当前 Scope
+
+当前版本已经支持：
+
+- 单人日程管理和复盘。
+- 早计划、晚复盘、日间记录、任务完成、计划调整和周期汇报。
+- 昨晚未完成任务滚动到第二天早计划。
+- 事件、感受、能量、打断、反馈和反思沉淀。
+- 通过飞书多维表格做长期检索和汇总。
+- 为未来群聊多人使用保留用户和来源字段。
+
+当前版本不默认做这些事：
+
+- 不从普通闲聊里自动推断触发，必须使用固定关键词或处于活跃流程回复中。
+- 不替代专业项目管理系统，只做个人日程和执行记忆。
+- 不默认支持多人混合统计，除非后续明确开启群聊多人模式。
 
 ### 依赖
 
@@ -150,7 +273,7 @@ cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 23 * * *" --prompt "晚
 cc-connect daemon restart
 ```
 
-之后你也可以随时给机器人发送 `早计划` 或 `晚复盘` 手动触发。如果你在 07:30 前已经手动完成早计划，07:30 的固定触发不应重复追问；如果你没有提前完成，07:30 固定触发会主动发起早计划提示，让你填写今天安排。
+之后你也可以随时给机器人发送 `早计划` 或 `晚复盘` 手动触发。
 
 ### 验证安装
 
@@ -187,57 +310,157 @@ MIT
 
 **Language:** [中文](#daily-ops-review-scale) | **English**
 
-`daily-ops-review` is a Codex Skill for personal daily planning, progress logging, evening retrospectives, and periodic reporting. It stores structured records in Feishu/Lark Base and uses cc-connect to trigger the workflow through a Feishu/Lark robot.
+`daily-ops-review` is a Codex Skill for personal daily planning, event logging, emotional signal capture, evening retrospectives, and periodic reporting. It stores structured memory in Feishu/Lark Base and uses cc-connect to make a Feishu/Lark robot naturally pick up the daily planning and review loop.
 
-The goal of this repository is to package a reusable daily review scale that another user can hand to an AI agent for guided installation.
+The goal of this repository is to package a reusable daily review Skill that another user can hand to an AI agent for guided installation.
 
-### What It Solves
+### What It Is For
 
-Daily planning systems often fail because notes stay scattered, plans and reviews are disconnected, and long-term reporting requires manually rereading old chats. This Skill stores daily information as queryable records instead of relying on conversation history.
+This is not just a todo list. It is a lightweight personal memory system for daily execution:
 
-It supports:
+- Unfinished work from last night should not disappear the next morning.
+- New morning plans should be merged with yesterday's carried-over tasks.
+- Daytime events, interruptions, opportunities, feedback, feelings, and thoughts can be recorded as they happen.
+- Evening review turns plans, execution, deviations, emotions, and tomorrow actions into structured records.
+- Later, the user can request reports by date range, goal, task status, emotion, blocker, or repeated pattern.
 
-- Morning planning.
-- Evening review of completion, blockers, mood, and next actions.
-- Ad-hoc daytime logging, progress updates, and plan adjustments.
-- Automatic carry-over of unfinished work into the next morning plan.
-- Periodic reporting by date range, status, goal, and planning cycle.
+It stores not only what was done, but also why something was missed, what happened, how it felt, what pattern is emerging, and what should change next.
 
-### Workflow
+### Daily Loop
 
-Scheduled triggers:
+1. **Evening review**
+   The user reports what was completed, what was missed, why it was missed, and which exact part should continue tomorrow. The robot marks carry-over tasks and writes concrete next actions.
+
+2. **Next morning plan**
+   The robot reads carried-over work first, then merges it with the user's new plan. If the user only mentions new tasks, yesterday's unfinished work still appears in the merged draft for confirmation.
+
+3. **Daytime records**
+   The user can log events, progress, interruptions, feedback, thoughts, emotion, and energy changes. These become event logs for evening review and monthly reporting.
+
+4. **Evening synthesis**
+   The robot fetches the morning plan and task records, reviews completed, partial, unfinished, or cancelled items, then extracts deviation causes, patterns, and tomorrow suggestions.
+
+5. **Periodic reports**
+   Queries such as `汇报：最近三天`, `汇报：本月目标进展`, or `汇报：最近我主要焦虑在哪里` retrieve structured records from Feishu/Lark Base instead of relying on chat memory.
+
+### Scheduled Triggers
 
 - 07:30 every day: `早计划`
 - 23:30 every day: `晚复盘`
 
-Manual triggers:
+If the morning plan is already completed manually before 07:30, the fixed trigger should not ask again. If it is not completed, the 07:30 trigger proactively starts the morning planning flow.
+
+### Manual Triggers
 
 ```text
 早计划
 晚复盘
-记录：今天客户反馈方案方向需要调整
-完成：客户方案完成 70%，明天继续补定价页
-调整：招聘 JD 挪到明天，先改岗位亮点
-汇报：最近三天
-汇报：本月目标进展
+记录：...
+完成：...
+调整：...
+汇报：...
 ```
 
-The morning plan first loads tasks marked as carried over from the previous review. Even if the user manually sends `早计划` with only new tasks, the robot should merge yesterday's unfinished carry-over with today's new tasks into one draft and ask for confirmation. The evening review classifies each planned item as completed, partially completed, unfinished, or cancelled, then extracts next actions.
+The trigger keyword must be at the beginning of the message to avoid accidental activation from casual chat.
+
+### Example: Carry Over Yesterday's Unfinished Work
+
+Evening review:
+
+```text
+晚复盘
+The client proposal is 70% done. The pricing page is still missing.
+Tomorrow continue with the pricing page and quote logic first.
+The hiring JD was not started because of an urgent meeting. Tomorrow only improve the role highlights.
+```
+
+Next morning, the user only sends new tasks:
+
+```text
+早计划 今天主要做产品周报和一个客户电话。
+```
+
+Expected robot behavior:
+
+```text
+我把昨晚延续事项和你今天新增的计划合并成这个草案，你确认一下：
+
+昨晚延续：
+1. 客户方案 -> 今天先补定价页和报价逻辑
+2. 招聘 JD -> 今天只改岗位亮点
+
+今天新增：
+1. 产品周报
+2. 客户电话
+
+你回复「确认」即可；也可以直接说删掉、推迟或改成哪一 part。
+```
+
+### Example: Record Events, Feelings, And Reflections
+
+```text
+记录：上午客户会后有点焦虑，主要担心方案范围太大，下午需要先收敛到报价和交付边界。
+```
+
+```text
+记录：下午被一个临时需求打断，原本写方案的时间被占用，感觉节奏有点乱。
+```
+
+```text
+记录：今天发现自己在不确定报价时会拖延，可能需要先列一个最小报价模板。
+```
+
+These entries become `事件日志` records with event type, impact level, emotion, linked task or goal when obvious, tags, and the original wording. They can later support reports such as:
+
+```text
+汇报：最近我主要被什么事情打断？
+汇报：最近我主要焦虑在哪里？
+汇报：最近三天哪些任务反复滚动？
+```
+
+### Example: Progress And Adjustment
+
+```text
+完成：客户方案完成 70%，明天继续补竞品分析和定价页。
+```
+
+```text
+调整：招聘 JD 今天不做，明天只改岗位亮点。
+```
+
+These update task records and, when needed, mark tasks for tomorrow with concrete next actions.
 
 ### Data Storage
 
 The installer creates or configures a Feishu/Lark Base with six tables:
 
-- `目标库`
-- `周期计划`
-- `每日计划`
-- `任务执行`
-- `事件日志`
-- `复盘报告`
+| Table | Purpose |
+| --- | --- |
+| `目标库` | Long-term, monthly, project, or habit goals. |
+| `周期计划` | Weekly, monthly, and phase plans. |
+| `每日计划` | Daily priorities, constraints, energy, morning status, evening status. |
+| `任务执行` | Task status, completion, reasons, next actions, carry-over state. |
+| `事件日志` | Events, interruptions, feedback, emotions, ideas, decisions, opportunities. |
+| `复盘报告` | Daily, weekly, monthly, and goal-level review summaries. |
 
-The tables preserve the user's original wording while also storing structured fields for filtering and reporting, such as date, user, status, priority, related goal, carry-over flag, and next action.
+Important records preserve the user's `原始消息` while also storing structured fields for filtering and reporting.
 
-As the dataset grows, reports should not scan every record. The Skill instructs the AI agent to use Base filters, views, and field projection first, then summarize only the relevant records.
+### Current Scope
+
+Supported:
+
+- Single-user daily planning and review.
+- Morning planning, evening review, daytime logs, task completion, plan adjustment, and periodic reports.
+- Carry-over from unfinished work into the next morning plan.
+- Event, feeling, energy, interruption, feedback, and reflection capture.
+- Long-term retrieval and summaries through Feishu/Lark Base.
+- User/source fields for future group use.
+
+Not supported by default:
+
+- Inferring triggers from casual chat without exact keywords.
+- Replacing a full project management system.
+- Mixed multi-user reporting unless group mode is explicitly added later.
 
 ### Requirements
 
@@ -331,7 +554,7 @@ cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 23 * * *" --prompt "晚
 cc-connect daemon restart
 ```
 
-You can also send `早计划` or `晚复盘` to the robot manually at any time. If the morning plan is already completed manually before 07:30, the fixed 07:30 trigger should not ask again. If it is not completed, the 07:30 trigger proactively asks the user to fill today's plan.
+You can also send `早计划` or `晚复盘` to the robot manually at any time.
 
 ### Verify
 

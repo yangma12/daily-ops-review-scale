@@ -43,8 +43,15 @@ Output:
 - Create `事件日志`.
 - Link to today's `每日计划` when possible.
 - Link to a task or goal only when obvious; otherwise leave blank.
+- Capture not only what happened, but also the user's feeling, impact, and reflection when present.
+- Fill `事件类型`, `影响程度`, `情绪`, and `标签` when the signal is clear. Preserve uncertain details in `内容` instead of over-classifying.
 
 Reply briefly with what was recorded and any one useful follow-up question if needed.
+
+Examples:
+- `记录：上午客户会后有点焦虑，主要担心方案范围太大，下午需要先收敛到报价和交付边界`
+- `记录：下午被临时需求打断，原本写方案的时间被占用，感觉节奏有点乱`
+- `记录：今天发现自己在不确定报价时会拖延，可能需要先列一个最小报价模板`
 
 ### `完成`
 
