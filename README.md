@@ -24,8 +24,8 @@
 
 固定触发：
 
-- 每天 09:00：`早计划`
-- 每天 22:30：`晚复盘`
+- 每天 07:30：`早计划`
+- 每天 23:30：`晚复盘`
 
 手动触发：
 
@@ -145,12 +145,12 @@ cc-connect sessions list
 然后添加两个定时任务。把 `PROJECT` 和 `SESSION_KEY` 替换成你的实际值：
 
 ```bash
-cc-connect cron add -p PROJECT -s SESSION_KEY --cron "0 9 * * *" --prompt "早计划" --desc "每日早计划" --session-mode new-per-run --timeout-mins 30
-cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 22 * * *" --prompt "晚复盘" --desc "每日晚复盘" --session-mode new-per-run --timeout-mins 30
+cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 7 * * *" --prompt "早计划" --desc "每日早计划" --session-mode new-per-run --timeout-mins 30
+cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 23 * * *" --prompt "晚复盘" --desc "每日晚复盘" --session-mode new-per-run --timeout-mins 30
 cc-connect daemon restart
 ```
 
-之后你也可以随时给机器人发送 `早计划` 或 `晚复盘` 手动触发。如果你在 09:00 前已经手动完成早计划，09:00 的固定触发不应重复追问；如果你没有提前完成，09:00 固定触发会主动发起早计划提示，让你填写今天安排。
+之后你也可以随时给机器人发送 `早计划` 或 `晚复盘` 手动触发。如果你在 07:30 前已经手动完成早计划，07:30 的固定触发不应重复追问；如果你没有提前完成，07:30 固定触发会主动发起早计划提示，让你填写今天安排。
 
 ### 验证安装
 
@@ -207,8 +207,8 @@ It supports:
 
 Scheduled triggers:
 
-- 09:00 every day: `早计划`
-- 22:30 every day: `晚复盘`
+- 07:30 every day: `早计划`
+- 23:30 every day: `晚复盘`
 
 Manual triggers:
 
@@ -326,12 +326,12 @@ cc-connect sessions list
 Then add scheduled prompts. Replace `PROJECT` and `SESSION_KEY` with your actual values:
 
 ```bash
-cc-connect cron add -p PROJECT -s SESSION_KEY --cron "0 9 * * *" --prompt "早计划" --desc "每日早计划" --session-mode new-per-run --timeout-mins 30
-cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 22 * * *" --prompt "晚复盘" --desc "每日晚复盘" --session-mode new-per-run --timeout-mins 30
+cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 7 * * *" --prompt "早计划" --desc "每日早计划" --session-mode new-per-run --timeout-mins 30
+cc-connect cron add -p PROJECT -s SESSION_KEY --cron "30 23 * * *" --prompt "晚复盘" --desc "每日晚复盘" --session-mode new-per-run --timeout-mins 30
 cc-connect daemon restart
 ```
 
-You can also send `早计划` or `晚复盘` to the robot manually at any time. If the morning plan is already completed manually before 09:00, the fixed 09:00 trigger should not ask again. If it is not completed, the 09:00 trigger proactively asks the user to fill today's plan.
+You can also send `早计划` or `晚复盘` to the robot manually at any time. If the morning plan is already completed manually before 07:30, the fixed 07:30 trigger should not ask again. If it is not completed, the 07:30 trigger proactively asks the user to fill today's plan.
 
 ### Verify
 

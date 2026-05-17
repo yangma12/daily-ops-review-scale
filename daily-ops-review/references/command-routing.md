@@ -23,8 +23,8 @@ Non-trigger messages should be ignored unless they are direct replies in an acti
 - Manual `晚复盘` before the fixed evening trigger completes the evening flow for that date.
 - Fixed triggers should check today's `每日计划` status first before asking the user anything.
 - If the relevant status is already complete, do not ask the full prompt again. Send a short confirmation only if appropriate.
-- If the fixed 09:00 morning trigger fires and today's morning plan is not complete, send the `早计划` prompt proactively so the user can fill today's plan.
-- If the user sends `早计划` with today's tasks before 09:00, run the same morning flow immediately. The later fixed 09:00 trigger must not duplicate the prompt after the plan is confirmed.
+- If the fixed 07:30 morning trigger fires and today's morning plan is not complete, send the `早计划` prompt proactively so the user can fill today's plan.
+- If the user sends `早计划` with today's tasks before 07:30, run the same morning flow immediately. The later fixed 07:30 trigger must not duplicate the prompt after the plan is confirmed.
 - Optional content after `早计划` is today's new plan, not a reason to ignore yesterday's unfinished work. The morning flow must still merge carry-over tasks with the new plan and ask for confirmation when carry-over decisions are ambiguous.
 
 ## Active Flow Replies

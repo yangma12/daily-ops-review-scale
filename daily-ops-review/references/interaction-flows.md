@@ -10,7 +10,7 @@ Goal: create a realistic daily plan with low friction.
 
 Morning planning has two valid entry modes:
 
-1. Empty trigger: fixed 09:00 schedule or a bare `早计划` message. Start by prompting the user.
+1. Empty trigger: fixed 07:30 schedule or a bare `早计划` message. Start by prompting the user.
 2. Trigger with user plan: `早计划 ...` or the user's direct reply to the morning prompt. Parse the supplied plan, but still fetch carry-over tasks first.
 
 Never skip carry-over retrieval just because the user already supplied today's new plan.
@@ -51,7 +51,7 @@ If no carry-over tasks exist, use the normal morning prompt.
 
 ### Scheduled Morning Behavior
 
-For the fixed 09:00 trigger:
+For the fixed 07:30 trigger:
 
 - First check whether today's `每日计划.早计划状态` is already `已完成`.
 - If already completed by a manual `早计划`, do not ask the user to fill the morning plan again. A short "今天早计划已记录" confirmation is enough, and silence is also acceptable if the integration supports it.
