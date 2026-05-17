@@ -2,7 +2,12 @@ import { execFileSync } from "node:child_process";
 
 const baseToken = process.argv[2];
 if (!baseToken) {
-  console.error("Usage: node bootstrap-base.mjs <base-token>");
+  console.error("Usage: node bootstrap-base.mjs <base-token> [bot|user]");
+  process.exit(2);
+}
+const identity = process.argv[3] || "bot";
+if (!["bot", "user"].includes(identity)) {
+  console.error("Identity must be either bot or user.");
   process.exit(2);
 }
 
@@ -162,28 +167,28 @@ const tableSpecs = {
 };
 
 function tableList() {
-  return run(["base", "+table-list", "--as", "user", "--base-token", baseToken, "--offset", "0", "--limit", "50"]).data.tables;
+  return run(["base", "+table-list", "--as", identity, "--base-token", baseToken, "--offset", "0", "--limit", "50"]).data.tables;
 }
 
 function fieldList(tableId) {
-  return run(["base", "+field-list", "--as", "user", "--base-token", baseToken, "--table-id", tableId, "--offset", "0", "--limit", "200"]).data.fields;
+  return run(["base", "+field-list", "--as", identity, "--base-token", baseToken, "--table-id", tableId, "--offset", "0", "--limit", "200"]).data.fields;
 }
 
 function updateTable(tableId, name) {
-  run(["base", "+table-update", "--as", "user", "--base-token", baseToken, "--table-id", tableId, "--name", name]);
+  run(["base", "+table-update", "--as", identity, "--base-token", baseToken, "--table-id", tableId, "--name", name]);
 }
 
 function createTable(name) {
-  const result = run(["base", "+table-create", "--as", "user", "--base-token", baseToken, "--name", name]);
+  const result = run(["base", "+table-create", "--as", identity, "--base-token", baseToken, "--name", name]);
   return result.data.table.id || result.data.table.table_id;
 }
 
 function updateField(tableId, fieldId, spec) {
-  run(["base", "+field-update", "--as", "user", "--base-token", baseToken, "--table-id", tableId, "--field-id", fieldId, "--json", JSON.stringify(spec)]);
+  run(["base", "+field-update", "--as", identity, "--base-token", baseToken, "--table-id", tableId, "--field-id", fieldId, "--json", JSON.stringify(spec)]);
 }
 
 function createField(tableId, spec) {
-  run(["base", "+field-create", "--as", "user", "--base-token", baseToken, "--table-id", tableId, "--json", JSON.stringify(spec)]);
+  run(["base", "+field-create", "--as", identity, "--base-token", baseToken, "--table-id", tableId, "--json", JSON.stringify(spec)]);
 }
 
 let tables = tableList();
@@ -227,4 +232,4 @@ for (const [name, id] of Object.entries(tableIds)) {
   };
 }
 
-console.log(JSON.stringify({ base_token: baseToken, tables: summary }, null, 2));
+console.log(JSON.stringify({ base_token: baseToken, identity, tables: summary }, null, 2));

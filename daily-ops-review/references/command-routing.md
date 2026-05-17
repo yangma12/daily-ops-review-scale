@@ -9,7 +9,7 @@ Supported prefixes:
 | Prefix | Route |
 | --- | --- |
 | `早计划` | Morning planning flow. Optional content after keyword can be parsed as the plan. |
-| `晚复盘` | Evening review flow. Optional content after keyword can be parsed as review input. |
+| `晚复盘` | Evening review flow. Optional content after keyword can be parsed as review input. Supports explicit date phrases such as `补 2026-05-17`. |
 | `记录:` / `记录：` | Create an event log. |
 | `完成:` / `完成：` | Update task progress or completion. |
 | `调整:` / `调整：` | Modify plan, task status, schedule, priority, or rollover. |
@@ -26,6 +26,7 @@ Non-trigger messages should be ignored unless they are direct replies in an acti
 - If the fixed 07:30 morning trigger fires and today's morning plan is not complete, send the `早计划` prompt proactively so the user can fill today's plan.
 - If the user sends `早计划` with today's tasks before 07:30, run the same morning flow immediately. The later fixed 07:30 trigger must not duplicate the prompt after the plan is confirmed.
 - Optional content after `早计划` is today's new plan, not a reason to ignore yesterday's unfinished work. The morning flow must still merge carry-over tasks with the new plan and ask for confirmation when carry-over decisions are ambiguous.
+- If `晚复盘` includes an explicit date, such as `晚复盘：补 2026-05-17`, use that date as the review date even if the current clock has passed midnight.
 
 ## Active Flow Replies
 

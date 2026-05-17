@@ -7,7 +7,7 @@ Copy this file to `local-config.md` during installation. Do not commit the real 
 - Name: `个人日程复盘系统`
 - URL: `<YOUR_FEISHU_BASE_URL>`
 - Base token: `<YOUR_BASE_TOKEN>`
-- Identity: use `--as user`
+- Identity: use `--as bot` for normal robot runtime reads/writes when the bot has Base permission; use `--as user` only for user-only setup operations.
 
 ## Tables
 

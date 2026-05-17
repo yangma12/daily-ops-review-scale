@@ -34,7 +34,7 @@ The first version is single-user, but every stored record must include actor and
    - Ad-hoc record, completion, or adjustment: `references/command-routing.md`
    - Periodic reports: `references/reporting.md`
    - Base creation or schema updates: `references/base-schema.md`
-4. For Feishu Base operations, use the `lark-base` skill. Read real table and field structure before writes. Prefer `--as user`.
+4. For Feishu Base operations, use the `lark-base` skill. Read real table and field structure before writes. Use the identity from `local-config.md`; default runtime identity is `--as bot` when the robot has Base permission. Use `--as user` only when a user-only operation is required or the bot lacks access.
 5. If Base token, table IDs, or robot context are missing, ask for the minimum missing setup item.
 
 ## Data Model Summary

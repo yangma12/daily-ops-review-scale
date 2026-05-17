@@ -22,9 +22,11 @@ for (const file of requiredFiles) {
 
 const configPath = join(skillDir, "references", "local-config.md");
 let baseToken = "";
+let identity = "bot";
 if (existsSync(configPath)) {
   const config = readFileSync(configPath, "utf8");
   baseToken = config.match(/Base token: `([^`]+)`/)?.[1] || "";
+  identity = config.match(/Identity: use `--as (bot|user)`/)?.[1] || identity;
   if (!baseToken || baseToken.includes("<")) failures.push("local-config.md does not contain a real Base token");
 }
 
@@ -37,7 +39,7 @@ function run(command, args) {
 
 if (baseToken) {
   try {
-    const tables = run("lark-cli", ["base", "+table-list", "--as", "user", "--base-token", baseToken, "--offset", "0", "--limit", "50"])?.data?.tables || [];
+    const tables = run("lark-cli", ["base", "+table-list", "--as", identity, "--base-token", baseToken, "--offset", "0", "--limit", "50"])?.data?.tables || [];
     const names = new Set(tables.map((table) => table.name));
     for (const expected of ["目标库", "周期计划", "每日计划", "任务执行", "事件日志", "复盘报告"]) {
       if (!names.has(expected)) failures.push(`Missing Base table ${expected}`);

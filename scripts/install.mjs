@@ -32,6 +32,7 @@ Options:
   --install-skill        Copy the skill to ~/.agents/skills/daily-ops-review
   --skill-dir <PATH>     Override the install target
   --base-name <NAME>     Override the created Base name
+  --identity <bot|user>  Lark CLI identity for Base schema reads/writes (default: bot)
 `);
 }
 
@@ -60,13 +61,18 @@ assertCommand("lark-cli", "Install it with: npm install -g @larksuite/cli");
 let baseToken = args.get("base-token");
 let baseUrl = "";
 let baseName = args.get("base-name") || "个人日程复盘系统";
+const identity = args.get("identity") || "bot";
+
+if (!["bot", "user"].includes(identity)) {
+  throw new Error("--identity must be either bot or user.");
+}
 
 if (!baseToken && args.has("create-base")) {
   const created = run("lark-cli", [
     "base",
     "+base-create",
     "--as",
-    "user",
+    identity,
     "--name",
     baseName,
     "--time-zone",
@@ -82,7 +88,7 @@ if (!baseToken) {
   throw new Error("Missing Base token. Pass --create-base or --base-token <TOKEN>.");
 }
 
-const bootstrap = run("node", [join(repoRoot, "daily-ops-review", "scripts", "bootstrap-base.mjs"), baseToken]);
+const bootstrap = run("node", [join(repoRoot, "daily-ops-review", "scripts", "bootstrap-base.mjs"), baseToken, identity]);
 const tables = bootstrap.tables || {};
 
 const installDir = args.get("skill-dir") || join(homedir(), ".agents", "skills", "daily-ops-review");
@@ -107,7 +113,7 @@ This local installation is configured for the user's personal Feishu Base.
 - Name: \`${baseName}\`
 - URL: \`${baseUrl || "<OPEN YOUR BASE IN FEISHU TO GET THE URL>"}\`
 - Base token: \`${baseToken}\`
-- Identity: use \`--as user\`
+- Identity: use \`--as ${identity}\`
 
 ## Tables
 
@@ -136,5 +142,6 @@ console.log(JSON.stringify({
   local_config: configTarget,
   base_token: baseToken,
   base_url: baseUrl,
+  identity,
   tables: Object.fromEntries(Object.entries(tables).map(([name, value]) => [name, value.table_id])),
 }, null, 2));

@@ -288,6 +288,14 @@ cc-connect daemon restart
 
 之后你也可以随时给机器人发送 `早计划` 或 `晚复盘` 手动触发。
 
+如果已经过了凌晨，需要补前一天复盘，建议显式写日期，避免机器人按今天理解：
+
+```text
+晚复盘：补 2026-05-17
+```
+
+机器人读写飞书多维表格时，默认可以使用机器人/bot 权限。只要机器人对这个 Base 有读写权限，就不需要依赖个人 user 授权；只有创建 Base 或 bot 权限不足时才需要切换到 user 授权。
+
 ### 定时没有发送怎么办
 
 如果过了时间机器人没有发消息，先查定时任务和 daemon：
@@ -607,6 +615,14 @@ cc-connect daemon restart
 ```
 
 You can also send `早计划` or `晚复盘` to the robot manually at any time.
+
+If it is already after midnight and you need to catch up on the previous day, include the exact date to avoid ambiguity:
+
+```text
+晚复盘：补 2026-05-17
+```
+
+For Feishu/Lark Base reads and writes, the default runtime identity can be the robot/bot identity. As long as the bot has access to the Base, personal user authorization is not required; use user authorization only for Base creation or when bot permissions are insufficient.
 
 ### Troubleshooting Scheduled Messages
 

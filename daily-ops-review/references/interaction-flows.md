@@ -161,12 +161,19 @@ Trigger: fixed evening schedule or `晚复盘`.
 
 Goal: review the day against the morning plan and create tomorrow-ready adjustments.
 
+### Review Date
+
+- Default review date is the local calendar date of the fixed evening trigger.
+- If the user sends `晚复盘` after midnight without an explicit date, ask whether they mean yesterday or today before writing records.
+- If the message includes an explicit date, such as `晚复盘：补 2026-05-17`, use that date as the review date and write all `每日计划`, `任务执行`, `事件日志`, and `复盘报告` records against that date.
+- For catch-up reviews, phrase prompts with the exact date, for example `补 2026-05-17 晚复盘`.
+
 ### Prompt With Morning Plan
 
-Fetch today's `每日计划` and `任务执行`, then ask:
+Fetch the review date's `每日计划` and `任务执行`, then ask:
 
 ```text
-今天早上定的重点是：
+{复盘日期} 早上定的重点是：
 1. ...
 2. ...
 3. ...
@@ -180,7 +187,7 @@ Fetch today's `每日计划` and `任务执行`, then ask:
 If there is no morning plan:
 
 ```text
-今天没有早计划，我帮你做一个补复盘。
+这一天没有早计划，我帮你做一个补复盘。
 
 你简单说三件事就行：
 1. 今天主要做了什么
