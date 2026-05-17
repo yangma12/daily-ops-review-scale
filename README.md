@@ -288,6 +288,32 @@ cc-connect daemon restart
 
 之后你也可以随时给机器人发送 `早计划` 或 `晚复盘` 手动触发。
 
+### 定时没有发送怎么办
+
+如果过了时间机器人没有发消息，先查定时任务和 daemon：
+
+```bash
+cc-connect cron list
+cc-connect daemon status
+cc-connect daemon logs -n 80
+```
+
+再看具体任务错误：
+
+```bash
+cc-connect cron info <JOB_ID>
+```
+
+如果看到类似 `platform "" not found for session "..."`，通常不是用户名问题，而是 cron 的会话参数填错了。cc-connect 定时任务依赖具体会话，`session_key` 需要指向当前机器人聊天的 active session key，通常是 `feishu:<chat_id>:<user_id>` 这种形式；不要把短会话 ID 或项目名误填进去。
+
+修复方式：
+
+```bash
+cc-connect cron edit <JOB_ID> project <PROJECT>
+cc-connect cron edit <JOB_ID> session_key '<ACTIVE_SESSION_KEY>'
+cc-connect daemon restart
+```
+
 ### 验证安装
 
 ```bash
@@ -581,6 +607,32 @@ cc-connect daemon restart
 ```
 
 You can also send `早计划` or `晚复盘` to the robot manually at any time.
+
+### Troubleshooting Scheduled Messages
+
+If the scheduled time passed but no robot message arrived, check cron and daemon status first:
+
+```bash
+cc-connect cron list
+cc-connect daemon status
+cc-connect daemon logs -n 80
+```
+
+Then inspect the job:
+
+```bash
+cc-connect cron info <JOB_ID>
+```
+
+If you see an error such as `platform "" not found for session "..."`, the issue is usually not the user name. It means the cron job points to the wrong session. The `session_key` should point to the active robot chat session, usually in the form `feishu:<chat_id>:<user_id>`; do not use the short session id or project name as the session key.
+
+Fix it with:
+
+```bash
+cc-connect cron edit <JOB_ID> project <PROJECT>
+cc-connect cron edit <JOB_ID> session_key '<ACTIVE_SESSION_KEY>'
+cc-connect daemon restart
+```
 
 ### Verify
 
