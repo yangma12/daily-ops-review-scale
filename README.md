@@ -198,6 +198,11 @@
 - [cc-connect](https://github.com/chenhg5/cc-connect)
 - 一个有权限创建飞书多维表格和配置机器人的飞书账号
 
+推荐先阅读：
+
+- lark-cli 仓库：<https://github.com/larksuite/cli>
+- cc-connect 中文说明：<https://github.com/chenhg5/cc-connect/blob/main/README.zh-CN.md>
+
 ### 安装 lark-cli
 
 ```bash
@@ -228,7 +233,7 @@ cc-connect feishu setup --project daily-ops-review
 
 cc-connect 的完整安装说明见：
 
-- <https://github.com/chenhg5/cc-connect/blob/main/INSTALL.md>
+- <https://github.com/chenhg5/cc-connect/blob/main/README.zh-CN.md>
 
 ### 安装这个 Skill
 
@@ -487,6 +492,11 @@ Not supported by default:
 - [cc-connect](https://github.com/chenhg5/cc-connect)
 - A Feishu/Lark account that can create Base documents and configure a robot
 
+Recommended references:
+
+- lark-cli repository: <https://github.com/larksuite/cli>
+- cc-connect Chinese README: <https://github.com/chenhg5/cc-connect/blob/main/README.zh-CN.md>
+
 ### Install lark-cli
 
 ```bash
@@ -517,7 +527,7 @@ cc-connect feishu setup --project daily-ops-review
 
 For the full cc-connect guide, see:
 
-- <https://github.com/chenhg5/cc-connect/blob/main/INSTALL.md>
+- <https://github.com/chenhg5/cc-connect/blob/main/README.zh-CN.md>
 
 ### Install This Skill
 
