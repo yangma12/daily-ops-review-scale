@@ -14,7 +14,7 @@
 
 - 昨晚没有做完的事，不会在第二天消失。
 - 早上新写的计划，会和昨天遗留任务合并成今天的计划草案。
-- 白天发生的事件、打断、机会、反馈、情绪和想法，可以随手记录。
+- 白天发生的值得复盘的事件，可以连同它带来的情绪、想法、判断、经验和后续影响一起记录。
 - 晚上复盘时，它会把计划、执行、偏差、感受和明日动作沉淀下来。
 - 过几天、几周或一个月后，你可以让它按时间、目标、任务状态、情绪和阻塞模式做汇报。
 
@@ -29,7 +29,7 @@
    机器人先读取昨晚滚动过来的任务，再合并你今天新增的计划。如果你只写了今天新计划、没有提昨天没做完的事，它也不能默认丢掉昨天遗留项，而是要合并成一版草案让你确认。
 
 3. **白天随手记录**
-   你可以记录事件、进展、打断、客户反馈、想法、情绪和能量变化。这些会进入 `事件日志`，成为晚上复盘和月度总结的素材。
+   你可以记录那些值得复盘的事件：发生了什么，它让你产生了什么情绪、想法、判断或经验，以及它可能怎样影响后续行动。这些会进入 `事件日志`，成为晚上复盘和月度总结的素材。
 
 4. **晚上复盘**
    机器人拉取今天早计划和任务执行情况，帮你按完成、部分完成、未完成、取消来复盘，并提取偏差原因、行为模式和明天建议。
@@ -89,7 +89,9 @@
 你回复「确认」即可；也可以直接说删掉、推迟或改成哪一 part。
 ```
 
-### 使用示例：白天记录事件、感受和反思
+### 使用示例：白天记录值得复盘的事件
+
+`记录：` 的重点不是普通任务进度，而是“发生了一件值得留下来的事”。它要沉淀的是事件本身，以及这件事对你的情绪、想法、判断、经验或后续行动产生的影响。
 
 你可以随时给机器人发：
 
@@ -105,7 +107,11 @@
 记录：今天发现自己在不确定报价时会拖延，可能需要先列一个最小报价模板。
 ```
 
-这些内容会沉淀为 `事件日志`。其中事件类型、影响程度、情绪、关联任务、标签和原始消息都会尽量保留下来，后面可以用于复盘：
+```text
+记录：写完周报后发现自己没有讲清楚结论，经验是以后先写一句核心判断再补细节。
+```
+
+这些内容会沉淀为 `事件日志`。其中事件类型、影响程度、情绪、情绪影响、想法判断、经验教训、后续动作、关联任务、标签和原始消息都会尽量保留下来，后面可以用于复盘：
 
 ```text
 汇报：最近我主要被什么事情打断？
@@ -114,6 +120,8 @@
 ```
 
 ### 使用示例：进展、调整和完成
+
+纯任务进度更适合用 `完成：`，计划变化更适合用 `调整：`。它们可以和事件有关，但不是 `记录：` 的主要用途。
 
 ```text
 完成：客户方案完成 70%，明天继续补竞品分析和定价页。
@@ -157,7 +165,7 @@
 | `周期计划` | 周计划、月计划、阶段计划和阶段复盘。 |
 | `每日计划` | 每天的 Top 1-3、约束、能量、早计划状态、晚复盘状态。 |
 | `任务执行` | 每个具体任务的状态、完成度、未完成原因、下一步动作、是否滚动。 |
-| `事件日志` | 白天发生的事件、反馈、打断、情绪、想法、决策和机会。 |
+| `事件日志` | 值得复盘的事件，以及它带来的情绪影响、想法判断、经验教训和后续动作。 |
 | `复盘报告` | 每日、每周、每月、目标维度的复盘摘要和建议。 |
 
 所有关键记录都会保留 `原始消息`，同时写入结构化字段，方便之后按日期、状态、目标、事件类型、情绪和影响程度检索。
@@ -169,7 +177,7 @@
 - 单人日程管理和复盘。
 - 早计划、晚复盘、日间记录、任务完成、计划调整和周期汇报。
 - 昨晚未完成任务滚动到第二天早计划。
-- 事件、感受、能量、打断、反馈和反思沉淀。
+- 值得复盘的事件、情绪影响、想法判断、经验教训和后续动作沉淀。
 - 通过飞书多维表格做长期检索和汇总。
 - 为未来群聊多人使用保留用户和来源字段。
 
@@ -320,7 +328,7 @@ This is not just a todo list. It is a lightweight personal memory system for dai
 
 - Unfinished work from last night should not disappear the next morning.
 - New morning plans should be merged with yesterday's carried-over tasks.
-- Daytime events, interruptions, opportunities, feedback, feelings, and thoughts can be recorded as they happen.
+- Noteworthy daytime events can be recorded together with their emotional impact, thoughts, judgments, lessons, and follow-up implications.
 - Evening review turns plans, execution, deviations, emotions, and tomorrow actions into structured records.
 - Later, the user can request reports by date range, goal, task status, emotion, blocker, or repeated pattern.
 
@@ -335,7 +343,7 @@ It stores not only what was done, but also why something was missed, what happen
    The robot reads carried-over work first, then merges it with the user's new plan. If the user only mentions new tasks, yesterday's unfinished work still appears in the merged draft for confirmation.
 
 3. **Daytime records**
-   The user can log events, progress, interruptions, feedback, thoughts, emotion, and energy changes. These become event logs for evening review and monthly reporting.
+   The user can log noteworthy events: what happened, what emotion, thought, judgment, or lesson it created, and how it may affect later action. These become event logs for evening review and monthly reporting.
 
 4. **Evening synthesis**
    The robot fetches the morning plan and task records, reviews completed, partial, unfinished, or cancelled items, then extracts deviation causes, patterns, and tomorrow suggestions.
@@ -396,7 +404,9 @@ Expected robot behavior:
 你回复「确认」即可；也可以直接说删掉、推迟或改成哪一 part。
 ```
 
-### Example: Record Events, Feelings, And Reflections
+### Example: Record Noteworthy Events, Feelings, And Reflections
+
+`记录：` is not the generic task-progress route. It is for an event worth preserving because it affected the user's emotion, thinking, judgment, experience, or later behavior.
 
 ```text
 记录：上午客户会后有点焦虑，主要担心方案范围太大，下午需要先收敛到报价和交付边界。
@@ -410,7 +420,11 @@ Expected robot behavior:
 记录：今天发现自己在不确定报价时会拖延，可能需要先列一个最小报价模板。
 ```
 
-These entries become `事件日志` records with event type, impact level, emotion, linked task or goal when obvious, tags, and the original wording. They can later support reports such as:
+```text
+记录：写完周报后发现自己没有讲清楚结论，经验是以后先写一句核心判断再补细节。
+```
+
+These entries become `事件日志` records with event type, impact level, emotion, emotional impact, thought or judgment, lesson learned, follow-up action, linked task or goal when obvious, tags, and the original wording. They can later support reports such as:
 
 ```text
 汇报：最近我主要被什么事情打断？
@@ -419,6 +433,8 @@ These entries become `事件日志` records with event type, impact level, emoti
 ```
 
 ### Example: Progress And Adjustment
+
+Routine task progress should use `完成：`. Plan or priority changes should use `调整：`. They can be related to an event, but they are not the main purpose of `记录：`.
 
 ```text
 完成：客户方案完成 70%，明天继续补竞品分析和定价页。
@@ -440,7 +456,7 @@ The installer creates or configures a Feishu/Lark Base with six tables:
 | `周期计划` | Weekly, monthly, and phase plans. |
 | `每日计划` | Daily priorities, constraints, energy, morning status, evening status. |
 | `任务执行` | Task status, completion, reasons, next actions, carry-over state. |
-| `事件日志` | Events, interruptions, feedback, emotions, ideas, decisions, opportunities. |
+| `事件日志` | Noteworthy events plus emotional impact, thoughts or judgments, lessons, and follow-up actions. |
 | `复盘报告` | Daily, weekly, monthly, and goal-level review summaries. |
 
 Important records preserve the user's `原始消息` while also storing structured fields for filtering and reporting.
@@ -452,7 +468,7 @@ Supported:
 - Single-user daily planning and review.
 - Morning planning, evening review, daytime logs, task completion, plan adjustment, and periodic reports.
 - Carry-over from unfinished work into the next morning plan.
-- Event, feeling, energy, interruption, feedback, and reflection capture.
+- Noteworthy event capture with emotional impact, thoughts or judgments, lessons, and follow-up actions.
 - Long-term retrieval and summaries through Feishu/Lark Base.
 - User/source fields for future group use.
 

@@ -29,7 +29,7 @@ Run these scenarios before relying on the system:
 
 1. Manual `早计划` with three tasks creates one daily plan and three task records.
 2. Fixed morning trigger after manual morning plan does not duplicate prompts.
-3. `记录：...` creates an event log linked to today.
+3. `记录：...` with a noteworthy event captures what happened plus emotion, thought or judgment, lesson, and optional follow-up action.
 4. `完成：...` updates a matching task.
 5. `调整：...` marks a task as rolled to tomorrow.
 6. Manual `晚复盘` creates a daily review and updates task statuses.

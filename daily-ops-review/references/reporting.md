@@ -40,7 +40,7 @@ Use the narrowest available path:
 - Always filter by `用户 ID` once multi-user data exists; first version may use the configured primary user id.
 - For `每日计划`, use `日期值` for date filtering and `日期` as the human-readable key.
 - For `任务执行`, prefer filters on `状态`, `是否滚动到明天`, `完成度`, and linked `所属日期`.
-- For `事件日志`, filter by `发生时间`, `事件类型`, `影响程度`, and `情绪`.
+- For `事件日志`, filter by `发生时间`, `事件类型`, `影响程度`, `情绪`, and tags. Use `情绪影响`, `想法判断`, `经验教训`, and `后续动作` to explain why the event mattered.
 - For `复盘报告`, filter by `复盘类型`, `开始日期`, and `结束日期`.
 - Use `--limit 200` maximum and continue pagination only when the requested report truly needs more records.
 
@@ -78,6 +78,7 @@ Track these patterns:
 - Common deviation causes
 - Energy state versus completion
 - External interruptions
+- Events that changed emotion, thinking, judgment, or later behavior
 - Goals with progress, stagnation, or unclear next action
 - Plans that were too large or too vague
 

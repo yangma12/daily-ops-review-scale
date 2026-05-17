@@ -103,6 +103,10 @@ Stores important events during the day.
 | 内容 | long text | Clean summary. |
 | 影响程度 | single select | `低`, `中`, `高`. |
 | 情绪 | single select | `积极`, `平稳`, `焦虑`, `疲惫`, `沮丧`, `兴奋`, `未知`. |
+| 情绪影响 | long text | How the event affected mood, energy, confidence, or stress. |
+| 想法判断 | long text | New thought, interpretation, concern, or judgment caused by the event. |
+| 经验教训 | long text | Reusable lesson or pattern learned from the event. |
+| 后续动作 | long text | Optional next action caused by this event; use task records for formal task tracking. |
 | 关联任务 | link to 任务执行 | Optional. |
 | 关联目标 | link to 目标库 | Optional. |
 | 标签 | multi select | Flexible tags. |

@@ -37,14 +37,18 @@ If there is no active flow, require one of the exact prefixes.
 
 ### `记录`
 
-Use for events, blockers, emotions, ideas, decisions, opportunities, or external feedback.
+Use for noteworthy events that are worth reviewing later because they changed the user's emotion, thinking, judgment, experience, or next behavior.
+
+Do not treat `记录` as a generic task-progress route. Routine progress such as "方案完成 70%" should use `完成`. Plan or priority changes should use `调整`.
+
+Completion can still appear inside an event log when the user frames it as reflective context, such as "写完初版后发现自己其实卡在报价判断上，有点焦虑". In that case, create the event log and update the related task only when the task signal is explicit.
 
 Output:
 - Create `事件日志`.
 - Link to today's `每日计划` when possible.
 - Link to a task or goal only when obvious; otherwise leave blank.
-- Capture not only what happened, but also the user's feeling, impact, and reflection when present.
-- Fill `事件类型`, `影响程度`, `情绪`, and `标签` when the signal is clear. Preserve uncertain details in `内容` instead of over-classifying.
+- Capture the event itself, emotional impact, new thought or judgment, reusable lesson, and possible follow-up action when present.
+- Fill `事件类型`, `影响程度`, `情绪`, `情绪影响`, `想法判断`, `经验教训`, `后续动作`, and `标签` when the signal is clear. Preserve uncertain details in `内容` instead of over-classifying.
 
 Reply briefly with what was recorded and any one useful follow-up question if needed.
 
@@ -52,6 +56,7 @@ Examples:
 - `记录：上午客户会后有点焦虑，主要担心方案范围太大，下午需要先收敛到报价和交付边界`
 - `记录：下午被临时需求打断，原本写方案的时间被占用，感觉节奏有点乱`
 - `记录：今天发现自己在不确定报价时会拖延，可能需要先列一个最小报价模板`
+- `记录：写完周报后发现自己没有讲清楚结论，经验是以后先写一句核心判断再补细节`
 
 ### `完成`
 
