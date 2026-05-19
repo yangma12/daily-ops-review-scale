@@ -314,6 +314,8 @@ cc-connect cron info <JOB_ID>
 
 如果看到类似 `platform "" not found for session "..."`，通常不是用户名问题，而是 cron 的会话参数填错了。cc-connect 定时任务依赖具体会话，`session_key` 需要指向当前机器人聊天的 active session key，通常是 `feishu:<chat_id>:<user_id>` 这种形式；不要把短会话 ID 或项目名误填进去。
 
+如果看到类似 `project "... " not found`，说明定时任务里的 `project` 不是 cc-connect 当前加载的项目名。用 `cc-connect daemon status` 和 daemon 启动日志确认实际项目名；单用户本地安装通常是 `default`，除非你在 `cc-connect feishu setup --project ...` 时显式使用了别的项目名。
+
 修复方式：
 
 ```bash
@@ -321,6 +323,8 @@ cc-connect cron edit <JOB_ID> project <PROJECT>
 cc-connect cron edit <JOB_ID> session_key '<ACTIVE_SESSION_KEY>'
 cc-connect daemon restart
 ```
+
+修复后可以先用一个临时近期开启的 cron 测试任务验证链路，看到 `cron: job completed` 后再删除临时任务。
 
 ### 验证安装
 
@@ -642,6 +646,8 @@ cc-connect cron info <JOB_ID>
 
 If you see an error such as `platform "" not found for session "..."`, the issue is usually not the user name. It means the cron job points to the wrong session. The `session_key` should point to the active robot chat session, usually in the form `feishu:<chat_id>:<user_id>`; do not use the short session id or project name as the session key.
 
+If you see an error such as `project "... " not found`, the cron job points to a project name that cc-connect is not currently running. Use `cc-connect daemon status` and the daemon startup logs to confirm the actual project name. For a single-user local setup this is often `default`, unless you explicitly used another project with `cc-connect feishu setup --project ...`.
+
 Fix it with:
 
 ```bash
@@ -649,6 +655,8 @@ cc-connect cron edit <JOB_ID> project <PROJECT>
 cc-connect cron edit <JOB_ID> session_key '<ACTIVE_SESSION_KEY>'
 cc-connect daemon restart
 ```
+
+After fixing it, create a temporary near-future cron job to test the full path, then delete that temporary job after you see `cron: job completed`.
 
 ### Verify
 
